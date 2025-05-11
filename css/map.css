@@ -1,0 +1,99 @@
+/* General Page Styling */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #f7f9fc, #e6ecf5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  /* Page Title */
+  h2 {
+    text-align: center;
+    padding: 20px 10px;
+    background: #4b1d7a;
+    color: white;
+    margin: 0;
+    font-size: 28px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  /* Search Bar Section */
+  #search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  #search-box input {
+    padding: 10px 15px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  #search-box input:focus {
+    border-color: #4b1d7a;
+    box-shadow: 0 0 5px rgba(75, 29, 122, 0.3);
+  }
+  
+  #search-box button {
+    padding: 10px 20px;
+    background: #4b1d7a;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  
+  #search-box button:hover {
+    background: #6d2ab7;
+  }
+  
+  /* Map Container */
+  #map {
+    height: 80vh;
+    width: 95%;
+    margin: 20px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    #map {
+      height: 70vh;
+    }
+  
+    #search-box input {
+      width: 200px;
+    }
+  
+    h2 {
+      font-size: 22px;
+    }
+  }
+  
+  /* Smooth Fade-in Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

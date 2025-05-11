@@ -1,0 +1,155 @@
+<!-- Folder structure overview 
+
+// Root Directory
+- index.html (Login Page)
+- signup.html (Sign Up Page)
+- forgot-password.html (Password Recovery)
+- dashboard.html (Main User Page)
+- bus-details.html (Individual Bus Info)
+- map.html (OpenStreetMap View)
+
+// CSS Folder
+/css/
+  - login.css
+  - signup.css
+  - forgot.css
+  - dashboard.css
+  - bus-details.css
+  - map.css
+
+// JS Folder
+/js/
+  - main.js (common interactions if needed)
+
+// Assets (Images, Icons)
+/assets/-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BusLynk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body class="bg-gray-100 font-inter">
+  <header class="bg-white shadow-md py-4 fixed top-0 w-full z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="/assests/buslynk.png.jpg" alt="Company Logo" class="logo">  <h1 class="text-xl font-bold text-gray-800">BusLynk</h1>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="/index.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Home</a></li>
+                    <li><a href="/html/bus-details.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Bus Details</a></li>
+                    <li><a href="/html/routes.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Routes</a></li>
+                    <li><a href="/html/map.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Map</a></li>
+                    <li><a href="#about" class="text-gray-700 hover:text-blue-600 transition duration-300">Account</a></li>
+                </ul>
+            </nav>
+            <button id="hamburger-btn" class="md:hidden text-gray-700 focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+    
+    <script src="/js/script.js"></script>
+</body>
+</html>
+
+
+    <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-90 z-50">
+        <div class="bg-gray-800 w-80 h-full absolute right-0 p-6">
+            <div class="flex justify-end mb-4">
+                <button id="close-menu-btn" class="text-white focus:outline-none" aria-label="Close Menu">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <nav class="block">
+                <ul class="space-y-4">
+                    <li><a href="/index.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Home</a></li>
+                    <li><a href="/html/bus-details.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Bus Details</a></li>
+                    <li><a href="/html/routes.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Routes</a></li>
+                    <li><a href="/html/map.html" class="text-gray-700 hover:text-blue-600 transition duration-300">Map</a></li>
+                    <li><a href="#about" class="text-gray-700 hover:text-blue-600 transition duration-300">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        <section id="home" class="banner-section">
+            <h1>Your Reliable Bus Tracking Solution</h1>
+            <p>Track your buses in real-time, optimize routes, and improve your transportation services.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Enter route or bus number">
+                <button>Track</button>
+            </div>
+        </section>
+        
+        <section id="route" class="route-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8">Plan Your Route</h2>
+            <form class="route-form">
+                <input type="text" placeholder="Enter starting location">
+                <input type="text" placeholder="Enter destination">
+                <button type="submit" class="custom-button">Show Routes</button>
+            </form>
+            <div id="map">
+                {/* Map will be displayed here */}
+            </div>
+        </section>
+
+        <section id="services" class="py-16">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-8">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                        <div class="service-icon">
+                            <i class="fas fa-bus"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Real-Time Tracking</h3>
+                        <p class="text-gray-600 text-center">Track the exact location of your buses in real-time to improve efficiency and transparency.</p>
+                    </div>
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                        <div class="service-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Route Optimization</h3>
+                        <p class="text-gray-600 text-center">Optimize bus routes to reduce travel time, fuel consumption, and operational costs.</p>
+                    </div>
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Analytics and Reporting</h3>
+                        <p class="text-gray-600 text-center">Get detailed reports and analytics on bus performance, delays, and other key metrics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="contact-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8" margin-top =10%>Contact Us</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea placeholder="Your Message"></textarea>
+                <button type="submit" class="custom-button">Send Message</button>
+            </form>
+        </section>
+
+        <section id="about" class="about-us-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8">About Us</h2>
+            <p class="text-gray-700">
+                At [Your Company Name], we are dedicated to providing reliable and efficient GPS bus tracking solutions. Our mission is to empower transportation companies and commuters with the tools they need to optimize routes, improve service quality, and enhance the overall commuting experience. With our cutting-edge technology and commitment to customer satisfaction, we strive to be the leading provider of GPS bus tracking services in the industry.
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>© 2025 GPS Bus Tracking. All rights reserved.</p>
+        </div>
+    </footer>
+

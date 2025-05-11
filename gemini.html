@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BusLynk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Updated Custom styles for Bus Tracking */
+        .service-icon {
+            width: 80px; /* Increased size of the icon */
+            height: 80px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #6b7280; /* Gray background for the icon */
+        }
+
+        .service-icon i {
+            font-size: 3rem; /* Increased icon size */
+            color: #ffffff; /* White icon color */
+        }
+
+        .custom-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: #45a049; /* Darker green */
+        }
+
+        .banner-section {
+            background-image: url('your-image.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            height: 500px; /* Adjust as needed */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .banner-section h1 {
+            font-size: 3rem; /* Larger heading */
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .banner-section p {
+            font-size: 1.2rem; /* Increased font size */
+            margin-bottom: 2rem;
+            max-width: 80%;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            padding: 0.5rem;
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .search-bar input[type="text"] {
+            border: none;
+            outline: none;
+            padding: 0.75rem;
+            font-size: 1rem;
+            width: 80%;
+        }
+
+        .search-bar button {
+            background-color: #FF6B6B; /* Red */
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #FF4757; /* Darker red */
+        }
+
+        .route-section {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .route-section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #2d3748;
+        }
+
+        .route-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .route-form input[type="text"] {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            width: 80%;
+            max-width: 400px;
+            font-size: 1rem;
+        }
+
+        .route-form button {
+            background-color: #4A5568; /* Dark gray */
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .route-form button:hover {
+            background-color: #2d3748; /* Darker gray */
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 4rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-section {
+            background-color: #f7fafc;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #2d3748;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            width: 80%;
+            max-width: 400px;
+            font-size: 1rem;
+        }
+
+        .contact-form textarea {
+            resize: none;
+            height: 150px;
+        }
+
+        .contact-form button {
+            background-color: #FFDB58; /* Yellow */
+            color: #2d3748;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #F4C300; /* Darker yellow */
+        }
+
+        .about-us-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .about-us-section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #2d3748;
+        }
+
+        .about-us-section p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            width: 80%;
+            margin: 0 auto 2rem auto;
+        }
+
+        .logo {
+            max-height: 50px; /* Reduced logo size */
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-inter">
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="/HTML/buslynk.png.jpg" alt="Company Logo" class="logo">  <h1 class="text-xl font-bold text-gray-800">GPS Bus Tracking</h1>
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="text-gray-700 hover:text-blue-600 transition duration-300">Home</a></li>
+                    <li><a href="#services" class="text-gray-700 hover:text-blue-600 transition duration-300">Services</a></li>
+                    <li><a href="#route" class="text-gray-700 hover:text-blue-600 transition duration-300">Routes</a></li>
+                    <li><a href="#contact" class="text-gray-700 hover:text-blue-600 transition duration-300">Contact</a></li>
+                    <li><a href="#about" class="text-gray-700 hover:text-blue-600 transition duration-300">About Us</a></li>
+                </ul>
+            </nav>
+            <button id="hamburger-btn" class="md:hidden text-gray-700 focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-90 z-50">
+        <div class="bg-gray-800 w-80 h-full absolute right-0 p-6">
+            <div class="flex justify-end mb-4">
+                <button id="close-menu-btn" class="text-white focus:outline-none" aria-label="Close Menu">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <nav class="block">
+                <ul class="space-y-4">
+                    <li><a href="#home" class="block text-lg text-white hover:text-blue-400 transition duration-300">Home</a></li>
+                    <li><a href="#services" class="block text-lg text-white hover:text-blue-400 transition duration-300">Services</a></li>
+                    <li><a href="#route" class="block text-lg text-white hover:text-blue-400 transition duration-300">Routes</a></li>
+                    <li><a href="#contact" class="block text-lg text-white hover:text-blue-400 transition duration-300">Contact</a></li>
+                    <li><a href="#about" class="block text-lg text-white hover:text-blue-400 transition duration-300">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        <section id="home" class="banner-section">
+            <h1>Your Reliable Bus Tracking Solution</h1>
+            <p>Track your buses in real-time, optimize routes, and improve your transportation services.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Enter route or bus number">
+                <button>Track</button>
+            </div>
+        </section>
+
+        <section id="services" class="py-16">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-8">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                        <div class="service-icon">
+                            <i class="fas fa-bus"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Real-Time Tracking</h3>
+                        <p class="text-gray-600 text-center">Track the exact location of your buses in real-time to improve efficiency and transparency.</p>
+                    </div>
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                        <div class="service-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Route Optimization</h3>
+                        <p class="text-gray-600 text-center">Optimize bus routes to reduce travel time, fuel consumption, and operational costs.</p>
+                    </div>
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Analytics and Reporting</h3>
+                        <p class="text-gray-600 text-center">Get detailed reports and analytics on bus performance, delays, and other key metrics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="route" class="route-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8">Plan Your Route</h2>
+            <form class="route-form">
+                <input type="text" placeholder="Enter starting location">
+                <input type="text" placeholder="Enter destination">
+                <button type="submit" class="custom-button">Show Routes</button>
+            </form>
+            <div id="map">
+                {/* Map will be displayed here */}
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8">Contact Us</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea placeholder="Your Message"></textarea>
+                <button type="submit" class="custom-button">Send Message</button>
+            </form>
+        </section>
+
+        <section id="about" class="about-us-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-8">About Us</h2>
+            <p class="text-gray-700">
+                At [Your Company Name], we are dedicated to providing reliable and efficient GPS bus tracking solutions. Our mission is to empower transportation companies and commuters with the tools they need to optimize routes, improve service quality, and enhance the overall commuting experience. With our cutting-edge technology and commitment to customer satisfaction, we strive to be the leading provider of GPS bus tracking services in the industry.
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>© 2025 GPS Bus Tracking. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const closeMenuBtn = document.getElementById("close-menu-btn");
+        const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+        const navLinks = document.querySelectorAll('header nav ul li a');
+        const sections = document.querySelectorAll('section');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle("hidden");
+        }
+
+        hamburgerBtn.addEventListener("click", toggleMobileMenu);
+        closeMenuBtn.addEventListener("click", toggleMobileMenu);
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener("click", toggleMobileMenu);
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(event.target) && event.target !== hamburgerBtn) {
+                toggleMobileMenu();
+            }
+        });
+
+        function updateActiveNavLink() {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 100 && window.scrollY < sectionTop + sectionHeight - 100) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNavLink);
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute('href').slice(1);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+
+        // Basic implementation for demonstration
+        function initMap() {
+            // Replace with your actual map initialization code (e.g., Google Maps, Mapbox)
+            const mapElement = document.getElementById('map');
+            if (mapElement) {
+                mapElement.innerHTML = '<div style="width: 100%; height: 100%; background-color: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: #888; font-size: 1.2rem;">Map Placeholder - Integrate your map here</div>';
+            }
+        }
+
+        initMap(); // Call this function to initialize the map
+    </script>
+</body>
+</html>

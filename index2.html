@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BusLynk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <link rel="stylesheet" href="/css/index2.css"/>
+</head>
+<body>
+
+    <aside class="left-sidebar">
+        <div class="logo-container">
+            <img src="/assests/bus_icon.png.jpg" alt="Company Logo" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/index2.html">Home</a></li>
+                <li><a href="/html/bus-details.html">Bus Details</a></li>
+                <li><a href="/html/routes.html">Routes</a></li>
+                <li><a href="#map-section">Map</a></li>
+                <li><a href="#account">Account</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-content-area">
+        <header class="top-bar">
+            <h1 class="buslynk-title">BusLynk</h1>
+            <button id="hamburger-btn" aria-label="Toggle Navigation">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </header>
+
+        <div id="mobile-menu" class="">
+            <div class="mobile-menu-header">
+                <img src="/assests/bus_icon.png.jpg" alt="Mobile Logo" class="mobile-logo">
+                <button id="close-menu-btn" aria-label="Close Menu" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/html/bus-details.html">Bus Details</a></li>
+                    <li><a href="/html/routes.html">Routes</a></li>
+                    <li><a href="#map-section">Map</a></li>
+                    <li><a href="#account">Account</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <main>
+            <section id="home" class="banner-section">
+                <div class="content-box">
+                    <h1>Your Reliable Bus Tracking Solution</h1>
+                    <p>Track your buses in real-time, optimize routes, and improve your transportation services.</p>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Enter route or bus number">
+                        <button>Track</button>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="route" class="route-section">
+                <div class="content-box">
+                    <h2>Plan Your Route</h2>
+                    <form class="route-form">
+                        <input type="text" placeholder="Enter starting location">
+                        <input type="text" placeholder="Enter destination">
+                        <button type="submit" class="custom-button">Show Routes</button>
+                    </form>
+                    <div id="map-placeholder">Map will be displayed here</div>
+                </div>
+            </section>
+
+            <section id="map-section" class="map-section">
+                <div class="content-box">
+                    <h2>Explore Our Network</h2>
+                    <a href="/html/map.html" target="_blank" aria-label="Map">
+                        <img src="https://via.placeholder.com/600x300?text=OpenStreetMap" alt="OpenStreetMap" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    </a>
+                    <p class="mt-4 text-sm text-gray-600">Click on the map to explore our service area on OpenStreetMap.</p>
+                </div>
+            </section>
+
+            <section id="services" class="service-section">
+                <div class="content-box">
+                    <div class="container mx-auto text-center">
+                        <h2>Our Services</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-bus"></i></div>
+                                <h3>Real-Time Tracking</h3>
+                                <p>Track exact location of your buses in real-time to improve efficiency.</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-route"></i></div>
+                                <h3>Route Optimization</h3>
+                                <p>Reduce travel time and cost by optimizing routes intelligently.</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                                <h3>Analytics & Reports</h3>
+                                <p>View bus performance, delays, and service metrics with clarity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="contact-section">
+                <div class="content-box">
+                    <h2>Contact Us</h2>
+                    <form class="contact-form">
+                        <input type="text" placeholder="Your Name">
+                        <input type="email" placeholder="Your Email">
+                        <textarea placeholder="Your Message" rows="5"></textarea>
+                        <button type="submit" class="custom-button">Send Message</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="about" class="about-us-section">
+                <div class="content-box">
+                    <h2>About Us</h2>
+                    <p>We provide cutting-edge GPS tracking for buses to improve commuting experience, reduce delays, and enhance route management. Our mission is to bring transparency and technology to daily transit.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 BusLynk. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+
+            if (closeMenuBtn && mobileMenu) {
+                closeMenuBtn.addEventListener('click', function () {
+                    mobileMenu.classList.remove('open');
+                });
+            }
+
+            const mobileNavLinks = mobileMenu.querySelectorAll('nav a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    mobileMenu.classList.remove('open');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

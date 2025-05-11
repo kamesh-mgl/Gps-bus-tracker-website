@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live GPS Tracker with Search</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/CSS/map.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script>
+   function searchLocation() {
+    const place = document.getElementById("searchBox").value;
+
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${place}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            // Optional but helps with CORS issues
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'Referer': 'https://yourdomain.com' // or just keep this line
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data && data.length > 0) {
+            const lat = parseFloat(data[0].lat);
+            const lon = parseFloat(data[0].lon);
+            map.setView([lat, lon], 14);
+
+            if (!searchMarker) {
+                searchMarker = L.marker([lat, lon]).addTo(map);
+            } else {
+                searchMarker.setLatLng([lat, lon]);
+            }
+        } else {
+            alert("Place not found!");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error fetching location data.");
+    });
+}
+</script>
+
+
+  <style>
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+    #search-box {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Live GPS Tracking (OpenStreetMap)</h2>
+
+  <!-- 🔍 Search Bar -->
+  <div id="search-box">
+    <input type="text" id="searchBox" placeholder="Search place..." />
+    <button onclick="searchLocation()">Search</button>
+
+  </div>
+
+  <!-- 🌍 Map -->
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <!-- Firebase Modules -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, onChildAdded, get, child } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    // 🔥 Your Firebase config
+    const firebaseConfig = {
+        apiKey: "AIzaSyBlc56ShmKg__wr2Kf-1V-I1-eQBD5TjLw",
+        authDomain: "gpstracker-a7277.firebaseapp.com",
+        databaseURL: "https://gpstracker-a7277-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "gpstracker-a7277",
+        storageBucket: "gpstracker-a7277.firebasestorage.app",
+        messagingSenderId: "345140392144",
+        appId: "1:345140392144:web:1db3cb10ac4be067aeeed5"
+    }
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    const map = L.map('map').setView([11.6643, 78.1460], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const pathCoords = [];
+    const marker = L.marker([11.6643, 78.1460]).addTo(map);
+    const pathLine = L.polyline(pathCoords, { color: 'blue' }).addTo(map);
+
+    // 📡 Fetch Live Data
+    const gpsRef = ref(database, "LiveGPSData");
+    onChildAdded(gpsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data && data.latitude && data.longitude) {
+        const latlng = [data.latitude, data.longitude];
+        pathCoords.push(latlng);
+        marker.setLatLng(latlng);
+        pathLine.setLatLngs(pathCoords);
+        map.setView(latlng, 15);
+      }
+    });
+
+    // 🔍 Search Function (by timestamp key)
+    window.searchData = async function () {
+      const timestamp = document.getElementById("searchInput").value;
+      if (!timestamp) return alert("Please enter a timestamp.");
+
+      const snapshot = await get(child(ref(database), `LiveGPSData/${timestamp}`));
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const latlng = [data.latitude, data.longitude];
+        marker.setLatLng(latlng);
+        map.setView(latlng, 16);
+        alert(`Location at ${timestamp} found!`);
+      } else {
+        alert("No data found for that timestamp.");
+      }
+    }
+  </script>
+
+</body>
+</html>
