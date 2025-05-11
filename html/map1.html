@@ -16,6 +16,30 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/map1.css">
+  <style>
+    /* Ensure the map fills its container and is responsive */
+    #map {
+      width: 100%;
+      min-height: 480px;
+      height: 60vh;
+      border-radius: 2rem;
+      outline: none;
+      background: #e5e9f2;
+      display: block;
+    }
+    @media (max-width: 991px) {
+      #map {
+        min-height: 320px;
+        border-radius: 1.5rem;
+      }
+    }
+    @media (max-width: 575px) {
+      #map {
+        min-height: 220px;
+        border-radius: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Sidebar Navigation -->
@@ -111,33 +135,83 @@
       });
     });
 
-    // Leaflet Map Setup
+    // Custom bus icon for all markers
+    const busIcon = L.icon({
+      iconUrl: 'https://img.icons8.com/color/48/bus--v1.png',
+      iconSize:     [38, 38],
+      iconAnchor:   [19, 38],
+      popupAnchor:  [0, -32]
+    });
+
+    // Demo bus data
+    const buses = [
+      { name: "Salem City Bus", lat: 11.6643, lon: 78.1460, route: "Salem - Dharmapuri" },
+      { name: "Dharmapuri Express", lat: 12.1277, lon: 78.1579, route: "Salem - Dharmapuri" },
+      { name: "Namakkal Local", lat: 11.2210, lon: 78.1652, route: "Salem - Namakkal" },
+      { name: "Krishnagiri Rapid", lat: 12.5307, lon: 78.2137, route: "Dharmapuri - Krishnagiri" },
+      { name: "Mettur Shuttle", lat: 11.7881, lon: 78.0037, route: "Salem - Dharmapuri" },
+      { name: "Rasipuram Bus", lat: 11.4602, lon: 78.1780, route: "Salem - Namakkal" },
+      { name: "Kaveripattinam Link", lat: 12.4125, lon: 78.2075, route: "Dharmapuri - Krishnagiri" }
+    ];
+
+    // Haversine distance in km
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const toRad = x => x * Math.PI / 180;
+      const R = 6371;
+      const dLat = toRad(lat2-lat1);
+      const dLon = toRad(lon2-lon1);
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
     let searchMarker;
-    const map = L.map('map').setView([11.6643, 78.1460], 13);
+    let busMarkers = [];
+
+    const map = L.map('map').setView([11.6643, 78.1460], 9);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
     // Initial marker
-    searchMarker = L.marker([11.6643, 78.1460]).addTo(map);
+    searchMarker = L.marker([11.6643, 78.1460], {icon: busIcon}).addTo(map)
+      .bindPopup("Salem City Center").openPopup();
 
-    // Search functionality using Nominatim
+    function addBusMarkers(busesToShow) {
+      // Remove old bus markers
+      busMarkers.forEach(marker => map.removeLayer(marker));
+      busMarkers = [];
+      busesToShow.forEach(bus => {
+        const marker = L.marker([bus.lat, bus.lon], {icon: busIcon})
+          .bindPopup(`<strong>${bus.name}</strong><br>${bus.route}`);
+        marker.addTo(map);
+        busMarkers.push(marker);
+      });
+    }
+
     document.getElementById('searchForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const place = document.getElementById("searchBox").value.trim();
       if (!place) return;
       fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place)}`, {
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       })
       .then(response => response.json())
       .then(data => {
         if (data && data.length > 0) {
           const lat = parseFloat(data[0].lat);
           const lon = parseFloat(data[0].lon);
-          map.setView([lat, lon], 15);
-          searchMarker.setLatLng([lat, lon]);
+          map.setView([lat, lon], 13);
+          searchMarker.setLatLng([lat, lon]).setIcon(busIcon).bindPopup(place).openPopup();
+
+          // Find nearby buses (within 30km)
+          const nearby = buses.filter(bus => getDistance(lat, lon, bus.lat, bus.lon) <= 30);
+          addBusMarkers(nearby);
+
+          if (nearby.length === 0) {
+            searchMarker.bindPopup(`${place}<br><small>No buses found within 30km.</small>`).openPopup();
+          }
         } else {
           alert("Place not found!");
         }
